@@ -17,6 +17,7 @@
                     <li><a href="#about"> About Me </a></li>
                     <li><a href="#projects"> Projects </a></li>
                     <li><a href="#contact"> Contact </a></li>
+                    <button id="theme-toggle" class="theme-toggle">Switch Mode</button><link rel="stylesheet" href="styles.css">
                     <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
                 </ul>
                 <i class="fa-solid fa-ellipsis" onclick="openmenu()"></i>
@@ -175,6 +176,13 @@
 
             document.getElementById(tabname).classList.add("active-tab");
         }
+
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        themeToggle.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+});
+
 
     </script>
 
