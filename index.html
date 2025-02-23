@@ -25,10 +25,12 @@
             </nav>
 
             <div class="header-text">
-                <h1>Hello World!</h1>
-                <h2>My name is <span>Maria Hernandez-Gallegos<br></span></h2>
-                <h3>I am a Computer Science student at California State University San Marcos</h3>
-            </div>
+              <div class="typing-container">
+                  <h1 class="typing-text">Hello World!</h1>
+              </div>
+              <h2>My name is <span>Maria Hernandez-Gallegos<br></span></h2>
+              <h3>I am a Computer Science student at California State University San Marcos</h3>
+          </div>
         </div>
     </div>
 <!-----------------AboutMe------------------------------------------------------------------------------->
@@ -191,6 +193,25 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.setAttribute('data-theme', savedTheme);
     themeToggle.textContent = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
 }); 
+
+
+const typingElement = document.querySelector('.typing-text');
+const text = typingElement.textContent;
+typingElement.textContent = '';
+
+function typeText(index = 0) {
+            if (index < text.length) {
+                typingElement.textContent += text[index];
+                setTimeout(() => typeText(index + 1), 150); // Typing speed
+            } else {
+                setTimeout(() => {
+                    typingElement.textContent = ""; 
+                    typeText(0); // Restart typing
+                }, 3000); // Wait 2 seconds 
+            }
+        }
+
+        typeText(); // Start typing 
 
     </script>
 
