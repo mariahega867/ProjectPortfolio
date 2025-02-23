@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maria's Projects</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/717299b56c.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="head">
         <div class="container">
             <nav>
-                <img src="images/logo.png" class="logo">
                 <ul id="sidemenu">
                     <li><a href="#header"> Home </a></li>
                     <li><a href="#about"> About Me </a></li>
                     <li><a href="#projects"> Projects </a></li>
                     <li><a href="#contact"> Contact </a></li>
-                    <button id="theme-toggle" class="theme-toggle">Switch Mode</button><link rel="stylesheet" href="styles.css">
+                    <button id="theme-toggle" class="theme-toggle">Dark Mode</button>
                     <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
                 </ul>
+                
                 <i class="fa-solid fa-ellipsis" onclick="openmenu()"></i>
             </nav>
 
@@ -156,9 +157,6 @@
 
 
 
-
-
-
     <script>
         var tablinks = document.getElementsByClassName("tab-links");
         var tabcontents = document.getElementsByClassName("tab-contents");
@@ -179,10 +177,20 @@
 
         const themeToggle = document.getElementById('theme-toggle');
         themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        themeToggle.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+    const isDark = document.body.getAttribute('data-theme') === 'dark';
+    document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    themeToggle.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+    
+    // Save preference
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
 });
 
+
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.setAttribute('data-theme', savedTheme);
+    themeToggle.textContent = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}); 
 
     </script>
 
@@ -190,15 +198,16 @@
 <script>
     var sidemenu = document.getElementById("sidemenu");
 
-    function openmenu(){
-        sidemenu.style.right = "0";
+    function openmenu() {
+    sidemenu.style.right = "0";
+    sidemenu.setAttribute('aria-expanded', 'true'); 
+}
 
-    }
+function closemenu() {
+    sidemenu.style.right = "-200px";
+    sidemenu.setAttribute('aria-expanded', 'false'); 
+}
 
-    function closemenu(){
-
-        sidemenu.style.right = "-200px";
-    }
 </script>
 
 
@@ -208,18 +217,28 @@
     const msg = document.getElementById("msg");
   
     form.addEventListener('submit', e => {
-      e.preventDefault()
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => {
-            msg.innerHTML = "Message sent successfully!"
-            setTimeout(function(){
-                msg.innerHTML = ""
-            }, 5000)
-            form.reset()
-        })
+    e.preventDefault();
+    const name = form.elements["Name"].value.trim();
+    const email = form.elements["Email"].value.trim();
+    const message = form.elements["Message"].value.trim();
 
-        .catch(error => console.error('Error!', error.message))
-    })
+    if (!name || !email || !message) {
+        msg.innerHTML = "Please fill out all fields!";
+        msg.style.color = "red";
+        setTimeout(() => { msg.innerHTML = ""; }, 3000);
+        return;
+    }
+
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+            msg.innerHTML = "Message sent successfully!";
+            msg.style.color = "green";
+            setTimeout(() => { msg.innerHTML = ""; }, 5000);
+            form.reset();
+        })
+        .catch(error => console.error('Error!', error.message));
+});
+
   </script>
     
 </body>
