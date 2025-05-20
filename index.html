@@ -56,9 +56,9 @@
                     </p>
 
                     <div class="tab-titles">
-                        <p class="tab-links active-link" onclick="opentab('Skills')">Skills</p>
-                        <p class="tab-links" onclick="opentab('Experience/Internships')">Experience/Internships</p>
-                        <p class="tab-links" onclick="opentab('Education')">Education</p>
+                        <p class="tab-links active-link" onclick="opentab(event, 'Skills')">Skills</p>
+                        <p class="tab-links" onclick="opentab(event, 'Experience/Internships')">Experience/Internships</p>
+                        <p class="tab-links" onclick="opentab(event, 'Education')">Education</p>
                     </div>
 
                     <div class="tab-contents active-tab" id="Skills">
@@ -163,7 +163,7 @@
         var tablinks = document.getElementsByClassName("tab-links");
         var tabcontents = document.getElementsByClassName("tab-contents");
 
-        function opentab(tabname){
+        function opentab(event, tabname){
             for(tablink of tablinks){
                 tablink.classList.remove("active-link");
             }
