@@ -136,131 +136,38 @@
         <div class="row">
             <div class="contact-left">
                 <h1 class="sub-title">Contact Me</h1>
-                <p> <i class="fa-solid fa-paper-plane"></i></p>
+                <p><i class="fa-solid fa-paper-plane"></i> maria.hernandez@example.com</p>
                 <div class="social-icons">
-                    <a href="https://github.com/mariahega867?tab=repositories"><i class="fa-brands fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/marialhernandezg/"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://github.com/mariahega867?tab=repositories" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/marialhernandezg/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
                 </div>
             </div>
             <div class="contact-right">
-                <form name="submit-to-google-sheet">
-                    <input type="text" name = "Name" placeholder="Your Name" required>
-                    <input type="email" name = "Email" placeholder="Your Email" required>
-                    <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
-                    <button type="submit" class="btn btn2">Submit</button>
+                <form id="contactForm" name="submit-to-google-sheet">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="Name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="Email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="Message" placeholder="Your Message" rows="6" required></textarea>
+                    </div>
+                    <div id="msg"></div>
+                    <button type="submit" class="btn btn2">Send Message</button>
                 </form>
-                <span id="msg"></span>
             </div>
         </div>
     </div>
 </div>
 
-
-
-
-
-    <script>
-        var tablinks = document.getElementsByClassName("tab-links");
-        var tabcontents = document.getElementsByClassName("tab-contents");
-
-        function opentab(event, tabname){
-            for(tablink of tablinks){
-                tablink.classList.remove("active-link");
-            }
-
-            for(tabcontent of tabcontents){
-                tabcontent.classList.remove("active-tab");
-            }
-
-            event.currentTarget.classList.add("active-link");
-
-            document.getElementById(tabname).classList.add("active-tab");
-        }
-
-        const themeToggle = document.getElementById('theme-toggle');
-        themeToggle.addEventListener('click', () => {
-    const isDark = document.body.getAttribute('data-theme') === 'dark';
-    document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-    themeToggle.textContent = isDark ? 'Dark Mode' : 'Light Mode';
-    
-    // Save preference
-    localStorage.setItem('theme', isDark ? 'light' : 'dark');
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.body.setAttribute('data-theme', savedTheme);
-    themeToggle.textContent = savedTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
-}); 
-
-
-const typingElement = document.querySelector('.typing-text');
-const text = typingElement.textContent;
-typingElement.textContent = '';
-
-function typeText(index = 0) {
-            if (index < text.length) {
-                typingElement.textContent += text[index];
-                setTimeout(() => typeText(index + 1), 150); // Typing speed
-            } else {
-                setTimeout(() => {
-                    typingElement.textContent = ""; 
-                    typeText(0); // Restart typing
-                }, 3000); // Wait 2 seconds 
-            }
-        }
-
-        typeText(); // Start typing 
-
-    </script>
-
-
-<script>
-    var sidemenu = document.getElementById("sidemenu");
-
-    function openmenu() {
-    sidemenu.style.right = "0";
-    sidemenu.setAttribute('aria-expanded', 'true'); 
-}
-
-function closemenu() {
-    sidemenu.style.right = "-200px";
-    sidemenu.setAttribute('aria-expanded', 'false'); 
-}
-
-</script>
-
-
-<script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxIT6NDdE2lQe1KvjvjX5lFdsPmnCUBpee58xc4jb1L81buCf5HFNw-G-ZG_8sPgL7ZAA/exec'
-    const form = document.forms['submit-to-google-sheet']
-    const msg = document.getElementById("msg");
-  
-    form.addEventListener('submit', e => {
-    e.preventDefault();
-    const name = form.elements["Name"].value.trim();
-    const email = form.elements["Email"].value.trim();
-    const message = form.elements["Message"].value.trim();
-
-    if (!name || !email || !message) {
-        msg.innerHTML = "Please fill out all fields!";
-        msg.style.color = "red";
-        setTimeout(() => { msg.innerHTML = ""; }, 3000);
-        return;
-    }
-
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => {
-            msg.innerHTML = "Message sent successfully!";
-            msg.style.color = "green";
-            setTimeout(() => { msg.innerHTML = ""; }, 5000);
-            form.reset();
-        })
-        .catch(error => console.error('Error!', error.message));
-});
-
-  </script>
-    
+<script src="functionality.js"></script>
 </body>
 </html>
